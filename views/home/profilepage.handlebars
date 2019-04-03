@@ -1,0 +1,434 @@
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
+<h3>{{{viewTitle}}}</h3>
+<!-- Fixed Sidebar Left -->
+
+<!-- Top Header-Profile -->
+
+<div class="container">
+	<div class="row">
+		<div class="col col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+			<div class="ui-block">
+				<div class="top-header">
+
+					<div class="top-header-thumb">
+						<img src="img/top-header1.jpg" alt="nature">
+					</div>
+
+					<div class="profile-section">
+
+						<div class="row">
+							<div class="col col-lg-5 col-md-5 col-sm-12 col-12">
+								<ul class="profile-menu">
+									<li>
+										<a href="02-ProfilePage.html" class="active">Timeline</a>
+									</li>
+									<li>
+										<a href="05-ProfilePage-About.html">About</a>
+									</li>
+									<li>
+										<a href="06-ProfilePage.html">Friends</a>
+									</li>
+								</ul>
+							</div>
+
+							<div class="col col-lg-5 ml-auto col-md-5 col-sm-12 col-12">
+								<ul class="profile-menu">
+									<li>
+										<a href="07-ProfilePage-Photos.html">Photos</a>
+									</li>
+									<li>
+										<a href="09-ProfilePage-Videos.html">Videos</a>
+									</li>
+									<li>
+										<a href="09-ProfilePage-Videos.html"></a>
+									</li>
+								</ul>
+							</div>
+
+						</div>
+
+						<div class="control-block-button">
+
+							{{#if false}}
+							<span class="notification-icon">
+							
+								<a href="#" class="accept-request" id="accept-request-btn">
+									<span class="icon-add">
+										<svg class="olymp-happy-face-icon"><use xlink:href="svg-icons/sprites/	icons.svg#olymp-happy-face-icon"></use></svg>
+									</span>
+									Accept
+								</a>
+				
+								<a href="#" class="accept-request request-del" id="reject-request-btn">
+									<span class="icon-minus">
+											<svg class="olymp-happy-face-icon"><use xlink:href="svg-icons/sprites/icons.svg#olymp-happy-face-icon"></use></svg>		
+									</span>
+									Reject
+								</a>
+							</span>
+							{{/if}}
+						
+
+							{{#if true}}
+							<span class="notification-icon">
+							
+								<a href="#" class="accept-request" id="send-request-btn">
+									<span class="icon-add">
+										<svg class="olymp-happy-face-icon"><use xlink:href="svg-icons/sprites/	icons.svg#olymp-happy-face-icon"></use></svg>
+									</span>
+									Send Request
+								</a>
+							</span>
+							{{/if}}
+
+
+							{{#if false}}
+							<span class="notification-icon">
+							
+								<a href="#" class="accept-request" id="request-sent-btn">
+									<span class="icon-add">
+										<svg class="olymp-happy-face-icon"><use xlink:href="svg-icons/sprites/	icons.svg#olymp-happy-face-icon"></use></svg>
+									</span>
+									Request Sent
+								</a>
+				
+								<a href="#" class="accept-request request-del" id="cancel-request-btn">
+									<span class="icon-minus">
+											<svg class="olymp-happy-face-icon"><use xlink:href="svg-icons/sprites/icons.svg#olymp-happy-face-icon"></use></svg>		
+									</span>
+									Cancel
+								</a>
+							</span>
+							{{/if}}
+
+							{{#if if_ideq}}
+							<div class="btn btn-control bg-primary more">
+							
+								<svg class="olymp-settings-icon"><use xlink:href="svg-icons/sprites/icons.svg#olymp-settings-icon"></use></svg>
+
+								<ul class="more-dropdown more-with-triangle triangle-bottom-right">
+									<li>
+										<a href="#" data-toggle="modal" data-target="#update-header-photo">Update Profile Photo</a>
+									</li>
+									<li>
+										<a href="#" data-toggle="modal" data-target="#update-header-photo">Update Cover Photo</a>
+									</li>
+								</ul>
+								
+							</div>
+							{{/if}}
+
+						</div>
+						
+					</div>
+
+					<div class="top-header-author">
+						<a href="02-ProfilePage.html" class="author-thumb">
+							<img src="uploads/profile_pic/{{pic}}" alt="author" style="position:fixed">
+						</a>
+						<div class="author-content">
+							<a href="" class="h4 author-name">{{userfirstName}}</a>
+							<div class="country">{{userName}}</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- ... end Top Header-Profile -->
+<div class="container">
+	<div class="row">
+
+		<!-- Main Content -->
+
+		<div class="col col-xl-6 order-xl-2 col-lg-12 order-lg-1 col-md-12 col-sm-12 col-12">
+
+			<div id="newsfeed-items-grid">
+
+				<div class="ui-block">
+
+					{{#each postImage}}
+
+				<div class="ui-block form-group ">
+					<div >
+					<img src="img/author-page.jpg" alt="author" class="post__author author vcard inline-items">
+					<a class="h6 post__author-name fn" href="">{{userfirstName}}</a>
+
+					<div name="caption"> {{caption}} </div>
+					<div name ="uploads"> <img src="/uploads/newfeeds_pic/{{file}}" alt=""></div>
+					</div>
+
+						{{#each postComment}}
+						<div class="post__author author vcard inline-items">
+							<img src="img/author-page.jp" alt="author" class="avatar">
+							<a class="h6 post__author-name fn" href="">{{userfirstName}}</a>
+							<div class="form-group with-icon-right ">
+								<div name="uploadsComment" class="form-control"></div>
+								<div class="add-options-message">
+									<a href="#" class="options-message" data-toggle="modal" data-target="#update-header-photo">
+										<svg class="olymp-camera-icon">
+											<use xlink:href="svg-icons/sprites/icons.svg#olymp-camera-icon"></use>
+										</svg>
+									</a>
+								</div>
+							</div>
+						</div>
+					{{/each}}	
+
+
+					<!-- Comment Form  -->
+					
+					<form class="comment-form inline-items">
+						<div>
+						<div class="post__author author vcard">
+							<img src="img/author-page.jpg" alt="author">
+							<a class="h6 post__author-name fn" href="">{{userfirstName}}</a>
+							</div>
+							<div class="form-group with-icon-right ">
+								<textarea name="uploads-comment" class="form-control" placeholder=""></textarea>
+							</div>
+						</div>
+					
+						<button class="btn btn-sm-1 btn-border-think c-grey btn-transparent custom-color">Cancel</button>
+						<button class="btn btn-sm-3 btn-primary">Post Comment</button>	
+					</form>
+					
+					<!-- ... end Comment Form  -->
+
+				</div>
+
+				{{/each}}
+
+
+				</div>
+
+			</div>
+
+		</div>
+
+		<!-- ... end Main Content -->
+
+
+		<!-- Left Sidebar -->
+
+		<div class="col col-xl-3 order-xl-1 col-lg-6 order-lg-2 col-md-6 col-sm-12 col-12">
+
+			<div class="ui-block">
+				<div class="ui-block-title">
+					<h6 class="title">Profile Intro</h6>
+				</div>
+				<div class="ui-block-content">
+
+					<!-- W-Personal-Info -->
+					<form>
+					<ul class="widget w-personal-info item-block">
+						<li>
+							<span class="title">About Me:</span>
+							<span class="text">Hi, I’m James, I’m 36 and I work as a Digital Designer for the  “Daydreams” Agency in Pier 56.</span>
+						</li>
+						<li>
+							<span class="title">Favourite TV Shows:</span>
+							<span class="text">Breaking Good, RedDevil, People of Interest, The Running Dead, Found,  American Guy.</span>
+						</li>
+						<li>
+							<span class="title">Favourite Music Bands / Artists:</span>
+							<span class="text">Iron Maid, DC/AC, Megablow, The Ill, Kung Fighters, System of a Revenge.</span>
+						</li>
+					</ul>
+					<a href="#" class="social-item bg-dribbble"> Update Intro </a>
+					</form>
+					<!-- .. end W-Personal-Info -->
+					<!-- W-Socials -->
+					
+					<div class="widget w-socials">
+						<h6 class="title">Other Social Networks:</h6>
+						<a href="#" class="social-item bg-facebook">
+							<i class="fab fa-facebook-f" aria-hidden="true"></i>
+							Facebook
+						</a>
+						<a href="#" class="social-item bg-twitter">
+							<i class="fab fa-twitter" aria-hidden="true"></i>
+							Twitter
+						</a>
+						
+					</div>
+					
+					
+					<!-- ... end W-Socials -->
+				</div>
+			</div>
+			</div>
+		
+
+
+		<!-- Right Sidebar -->
+
+		<div class="col col-xl-3 order-xl-3 col-lg-6 order-lg-3 col-md-6 col-sm-12 col-12">
+
+			<div class="ui-block">
+				<div class="ui-block-title">
+					<h6 class="title">Last Photos</h6>
+				</div>
+				<div class="ui-block-content">
+
+					<!-- W-Latest-Photo -->
+					
+					<ul class="widget w-last-photo js-zoom-gallery">
+						<li>
+							<a href="img/last-photo10-large.jpg">
+								<img src="img/last-photo10-large.jpg" alt="photo">
+							</a>
+						</li>
+						
+					</ul>
+					
+					
+					<!-- .. end W-Latest-Photo -->
+				</div>
+			</div>
+
+			
+			<div class="ui-block">
+				<div class="ui-block-title">
+					<h6 class="title">Friends (00)</h6>
+				</div>
+				<div class="ui-block-content">
+
+					<!-- W-Faved-Page -->
+					
+					<ul class="widget w-faved-page js-zoom-gallery">
+						<li>
+							<a href="#">
+								<img src="img/avatar38-sm.jpg" alt="author">
+							</a>
+						</li>
+						
+					</ul>
+					
+					<!-- .. end W-Faved-Page -->
+				</div>
+			</div>
+
+			
+
+		<!-- ... end Right Sidebar -->
+
+	</div>
+
+
+<!-- Window-popup Update Header Photo -->
+
+<div class="modal fade" id="update-header-photo" tabindex="-1" role="dialog" aria-labelledby="update-header-photo" aria-hidden="true">
+	<div class="modal-dialog window-popup update-header-photo" role="document">
+		<div class="modal-content">
+			<a href="#" class="close icon-close" data-dismiss="modal" aria-label="Close">
+				<svg class="olymp-close-icon"><use xlink:href="svg-icons/sprites/icons.svg#olymp-close-icon"></use></svg>
+			</a>
+
+			<div class="modal-header">
+				<h6 class="title">Update Header Photo</h6>
+			</div>
+
+			<div class="modal-body">
+				<a href="#" class="upload-photo-item">
+				<svg class="olymp-computer-icon"><use xlink:href="svg-icons/sprites/icons.svg#olymp-computer-icon"></use></svg>
+
+				<h6>Upload Photo</h6>
+				<span>Browse your computer.</span>
+			</a>
+
+				<a href="#" class="upload-photo-item" data-toggle="modal" data-target="#choose-from-my-photo">
+
+			<svg class="olymp-photos-icon"><use xlink:href="svg-icons/sprites/icons.svg#olymp-photos-icon"></use></svg>
+
+			<h6>Choose from My Photos</h6>
+			<span>Choose from your uploaded photos</span>
+		</a>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<!-- ... end Window-popup Update Header Photo -->
+
+<!-- Window-popup Choose from my Photo -->
+
+<div class="modal fade" id="choose-from-my-photo" tabindex="-1" role="dialog" aria-labelledby="choose-from-my-photo" aria-hidden="true">
+	<div class="modal-dialog window-popup choose-from-my-photo" role="document">
+
+		<div class="modal-content">
+			<a href="#" class="close icon-close" data-dismiss="modal" aria-label="Close">
+				<svg class="olymp-close-icon"><use xlink:href="svg-icons/sprites/icons.svg#olymp-close-icon"></use></svg>
+			</a>
+			<div class="modal-header">
+				<h6 class="title">Choose from My Photos</h6>
+
+				<!-- Nav tabs -->
+				<ul class="nav nav-tabs" role="tablist">
+					<li class="nav-item">
+						<a class="nav-link active" data-toggle="tab" href="#home" role="tab" aria-expanded="true">
+							<svg class="olymp-photos-icon"><use xlink:href="svg-icons/sprites/icons.svg#olymp-photos-icon"></use></svg>
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" data-toggle="tab" href="#profile" role="tab" aria-expanded="false">
+							<svg class="olymp-albums-icon"><use xlink:href="svg-icons/sprites/icons.svg#olymp-albums-icon"></use></svg>
+						</a>
+					</li>
+				</ul>
+			</div>
+
+			<div class="modal-body">
+				<!-- Tab panes -->
+				<div class="tab-content">
+					<div class="tab-pane active" id="home" role="tabpanel" aria-expanded="true">
+
+						<div class="choose-photo-item" data-mh="choose-item">
+							<div class="radio">
+								<label class="custom-radio">
+									<img src="img/choose-photo1.jpg" alt="photo">
+									<input type="radio" name="optionsRadios">
+								</label>
+							</div>
+						</div>
+
+						<a href="#" class="btn btn-secondary btn-lg btn--half-width">Cancel</a>
+						<a href="#" class="btn btn-primary btn-lg btn--half-width">Confirm Photo</a>
+
+					</div>
+					<div class="tab-pane" id="profile" role="tabpanel" aria-expanded="false">
+
+						<div class="choose-photo-item" data-mh="choose-item">
+							<figure>
+								<img src="img/choose-photo10.jpg" alt="photo">
+								<figcaption>
+									<a href="#">South America Vacations</a>
+									<span>Last Added: 2 hours ago</span>
+								</figcaption>
+							</figure>
+						</div>
+						
+						<a href="#" class="btn btn-secondary btn-lg btn--half-width">Cancel</a>
+						<a href="#" class="btn btn-primary btn-lg disabled btn--half-width">Confirm Photo</a>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+</div>
+
+<!-- ... end Window-popup Choose from my Photo -->
+
+
+<script>
+$('#send-request-btn').on('click',function(){
+	var keyVal = { srcid: '{{sessid}}' , destid : '{{userid}}' };
+	console.log('wertyui',keyVal);
+
+});
+</script>

@@ -10,22 +10,27 @@ const {isEmpty} = require('../../helpers/upload-helper');
 	});
 
 	router.get('/',(req,res)=>{
-	
-			//require('locus');
-		 var users = req.session.user;
-		 console.log("User Id: ",users);
-		var userid = users._id ;//sess.user._id;
 
-		PostFile.find({postedBy:userid}).then(postImage=>{
-			//console.log(postImage,"--",userid);
-			res.render('home/index',{
-					postImage: postImage,
-                    title: users.userName,
-                    id: users._id,
-                    firstName : users.firstName,
-                });
-		});
+		 if(req.session.user){
 
+		 	 var users = req.session.user;
+			 console.log("User Id: ",users);
+			 var userid = users._id ;
+		
+			PostFile.find({postedBy:userid}).then(postImage=>{
+				//console.log(postImage,"--",userid);
+				res.render('home/index',{
+						postImage: postImage,
+	                    title: users.userName,
+	                    id: users._id,
+	                    firstName : users.firstName,
+	                });
+			});
+		}
+
+		else{
+			res.redirect('/login');
+		}
 		//PostComment.find({}).then(postComment=>{
 			//console.log(postedid);
 			//res.render('home/index',{postComment: postComment});

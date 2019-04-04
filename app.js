@@ -54,14 +54,18 @@ app.use((req,res,next)=>{
 
 //Load Routes
 const home = require('./routes/home/main');
-const login = require('./routes/admin/main');
-const signup = require('./routes/admin/posts');
+const login = require('./routes/admin/login');
+const logout = require('./routes/admin/logout');
+const signup = require('./routes/admin/signup');
 const profilepage = require('./routes/home/profilepage');
+const friendrequest = require('./routes/home/friend-request');
 //const admin_page = require('./routes/admin/posts-index');
 //Use Routes 
 app.use('/',home);
 app.use('/login',login);
+app.use('/logout',logout);
 app.use('/signup',signup);
+app.use('/friend-request',friendrequest);
 app.use('/',profilepage);
 //app.use('/',admin_page);
  

@@ -18,10 +18,10 @@ router.get('/', (req,res) => {
 	var sess= req.session;
 	if(sess.user)
 	{
-		//req.session.destroy();
-		res.redirect('/login');
+		res.redirect('/');
 	}
 	else{
+
 		res.render('admin/login',{title : 'Login'});
 	}
 });

@@ -73,7 +73,7 @@
 							{{#if true}}
 							<span class="notification-icon">
 							
-								<a href="#" class="accept-request" id="send-request-btn">
+								<a class="accept-request" id="send-request-btn">
 									<span class="icon-add">
 										<svg class="olymp-happy-face-icon"><use xlink:href="svg-icons/sprites/	icons.svg#olymp-happy-face-icon"></use></svg>
 									</span>
@@ -427,8 +427,18 @@
 
 <script>
 $('#send-request-btn').on('click',function(){
+	
 	var keyVal = { srcid: '{{sessid}}' , destid : '{{userid}}' };
-	console.log('wertyui',keyVal);
+	console.log('Hello There',keyVal);
 
+	$.ajax({
+		url : '/friend-request',
+		type : 'POST',
+		data : keyVal,
+		dataType : 'json',
+		success : (data) => {
+			console.log(data);
+		}
+	});
 });
 </script>

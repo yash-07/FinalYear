@@ -34,23 +34,13 @@ router.get('/admin',(req,res)=>{
 
 router.post('/',(req,res)=>{
 	
-	let optionsCheckboxes = true;
-		if(req.body.optionsCheckboxes){
-			optionsCheckboxes = true;
-		} 
-		else{
-			optionsCheckboxes = false;
-		}
+	//console.log(req.body.optionsCheckboxes);
 	let filename = '';
 	let file = req.files.file;
-
-	//Moving File To Folder
-	var currentid = newUser._id;
-	//console.log(currentid);
-	filename = currentid + '-' + file.name;
+	console.log(req.body.dateTimepicker);
 	let dirUploads = './public/uploads/profile_pic/'; 
 
-	file.mv(dirUploads + filename,(err) =>{
+	file.mv(dirUploads + file.name,(err) =>{
 		if(err){ 
 					throw err;
 				}
@@ -58,29 +48,25 @@ router.post('/',(req,res)=>{
 
 	//Fetching Data from Form
 	const newUser = new User({
-
 		firstName: req.body.firstName ,
 		userName: '@'+ req.body.userName ,
 		email: req.body.email ,
 		password: req.body.password ,
 		dateTimepicker: req.body.dateTimepicker ,
 		gender: req.body.gender ,
-		profilePic: filename,
-		optionsCheckboxes: optionsCheckboxes,	
-		//date : generateTime date 'DD MMMM YYYY X'
+		profilePic: file.name
 	});
 
 		
 
 	//Saving Data
-	newUser.save((err,post) => {
+	newUser.save((err,user) => {
 		if(!err) {
 			if(req.query.type == 'api'){
 				res.status(200).json({message: 'Signup Successful!'});
 			}
 			else{
-				console.log('doc:'+post);
-				req.flash('success_message',`Welcome to Soci0_Medi@ ${post.userName} !!`);
+				req.flash('success_message',`Welcome to Soci0_Medi@ ${user.userName} !!`);
 				res.redirect('/signup');
 			}
 		}
@@ -92,11 +78,6 @@ router.post('/',(req,res)=>{
 			}
 		}
 	});
-
-	//.then(Savedpost =>{
-	//	res.redirect('/signup');
-	//	console.log(Savedpost);
-	//})
 
 });
 

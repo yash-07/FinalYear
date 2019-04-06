@@ -26,26 +26,26 @@ const UserSchema = new Schema({
 		minlength: 8,
 		required:true,
 		unique: true
-		},
+	},
 
 	password:{
 
 		type:String,
 		required:true,
 		minlength:8
-			},
+		},
 
 	dateTimepicker:{
 
-		type:Date,
+		type:String,
 		required: true
-		},
+	},
 
 	gender:{
 
 		type:String,
 		required: true
-			},
+	},
 	profilePic:{
 		type: String,
 		required: true

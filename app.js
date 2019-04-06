@@ -59,6 +59,11 @@ const logout = require('./routes/admin/logout');
 const signup = require('./routes/admin/signup');
 const profilepage = require('./routes/home/profilepage');
 const friendrequest = require('./routes/home/friend-request');
+const checkreqstatus = require('./routes/home/check-req-status');
+const acceptfrndreq = require('./routes/home/accept-friend-request');
+const removefrndreq = require('./routes/home/remove-friend-request');
+const comment = require('./routes/home/comment')
+const search = require('./routes/home/search');
 //const admin_page = require('./routes/admin/posts-index');
 //Use Routes 
 app.use('/',home);
@@ -67,6 +72,11 @@ app.use('/logout',logout);
 app.use('/signup',signup);
 app.use('/friend-request',friendrequest);
 app.use('/',profilepage);
+app.use('/accept-friend-request',acceptfrndreq);
+app.use('/check-req-status',checkreqstatus);
+app.use('/remove-friend-request',removefrndreq);
+app.use('/comment',comment);
+app.use('/search',search);
 //app.use('/',admin_page);
  
 app.listen(4500,()=>{

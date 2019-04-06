@@ -16,61 +16,53 @@ router.get('/:id', (req,res) => {
 	var sess = req.session;
     var userid = req.params.id;
 
- //    var user = sess.user;
-    console.log(userid);
-	// var userid = user._id;
+	if(!sess.user) {
+		res.redirect('/login');
+	}
+	else 
+	{
+		console.log(userid);
 
-    User.findOne({_id: userid }, function(err,user){
-		if(err){
-			// alert("Error");
-			console.log('Error');
-			return res.status(500).send();
-		}
-		else if(!user) {
-			// alert("Wrong Credentials");
-			console.log("Invalid Username!");
-			return res.status(404).send();
-		}
-		else {
-			if(req.query.type == 'json') {
-				//return res.status(200).json({message: 'User Found!', user: user});
+		User.findOne({_id: userid }, function(err,user){
+			if(err){
+				// alert("Error");
+				console.log('Error');
+				return res.status(500).send();
+			}
+			else if(!user) {
+				// alert("Wrong Credentials");
+				console.log("Invalid Username!");
+				return res.status(404).send();
 			}
 			else {
-
-				 	var sessuser = req.session.user;
-		 			//console.log("User : ",user);
-				 	var sessid = sessuser._id ;//sess.user._id;
+				if(req.query.type == 'json') {
+					//return res.status(200).json({message: 'User Found!', user: user});
+				}
+				else {
+					var sessuser = req.session.user;
+					var sessid = sessuser._id ;
+					//var sessid = "5ca5c231ad24c31ac98ea5fd";
 					var if_profilepage = if_ideq(sessid,userid);
-				//console.log(if_profilepage);
 
-				PostFile.find({postedBy:userid}).then(postImage=>{
-					//console.log(postImage,"--",userid);
-					res.render('home/profilepage',{
-							postImage: postImage,
-		                    title: user.userName,
-		                    if_ideq : if_profilepage,
-		                    sessid : sessid,
-		                    userid : userid,
-		                    firstName : sessuser.firstName,
-		                    userfirstName : user.firstName
-		                });
-				});
-		              
-		         // return res.render('home/profilepage',{
-                //     title: user.userName,
-                //     id: user._id,
-                //     firstName: user.firstName,
-                // });
-        
+					PostFile.find({postedBy:userid}).then(posts=>{
+						res.render('home/profilepage',{
+								postsArray: posts,
+								title: user.userName,
+								//if_ideq : if_profilepage,
+								id : sessid,
+								userid : userid,
+								pic: user.profilePic,
+								sesspic: sessuser.profilePic,
+								firstName : sessuser.firstName,
+								//firstName : 'Vipul Singh',
+								userfirstName : user.firstName
+							});
+					});
+				}
 			}
-			// return res.status(200).json(user);
-		}
-	});
+		});
+	}
 });
-
-// router.get('/',(req,res)=>{
-// 	res.render('home/profilepage');
-// });
 
 router.post('/',(req,res)=>{
 	res.render('home/profilepage');

@@ -43,7 +43,7 @@
 						<div class="tab-pane active" id="home-1" role="tabpanel" aria-expanded="true">
 							<form action="" method="post" enctype="multipart/form-data" >
 								<div class="author-thumb">
-									<img src="img/author-page.jpg" alt="author">
+									<img style="width:36px;height:36px" src="uploads/profile_pic/{{sesspic}}" alt="author">
 								</div>
 								<div class="form-group with-icon label-floating is-empty">
 									<label class="control-label">Share what you are thinking here...</label>
@@ -65,8 +65,6 @@
 									<input type="file" name="file" class="form-control">
 									
 									<button type="submit" class="btn btn-primary btn-md-2" >Post Status</button>
-
-									<button   class="btn btn-md-2 btn-border-think btn-transparent c-grey">Preview</button>
 				
 								</div>
 				
@@ -81,23 +79,27 @@
 
 			<div id="newsfeed-items-grid">
 
-				{{#each postImage}}
+				{{#each posts}}
 
 				<div class="ui-block form-group ">
-					<div >
-					<img src="img/author-page.jpg" alt="author" class="post__author author vcard inline-items">
-					<a class="h6 post__author-name fn" href="">{{firstName}}</a>
+					<div>
+						<div class="author-thumb">
+							<img style="width:36px;height:36px" src="uploads/profile_pic/{{../sesspic}}" alt="author">
+						</div>
+						<a class="h6 post__author-name fn" href="/{{../id}}">{{../firstName}}</a>
 
-					<div name="caption"> {{caption}} </div>
-					<div name ="uploads"> <img src="/uploads/newfeeds_pic/{{file}}" alt=""></div>
+						<div name="caption"> {{caption}} </div>
+						<div name ="uploads"> <img src="/uploads/newfeeds_pic/{{file}}" alt=""></div>
 					</div>
+						<br>
+						{{#each comments}}
 
-						{{#each postComment}}
 						<div class="post__author author vcard inline-items">
-							<img src="img/author-page.jp" alt="author">
-							<a class="h6 post__author-name fn" href="">{{firstName}}</a>
+							<img src="uploads/profile_pic/{{commenterPic}}" alt="author" class="avatar">
+							<a class="h6 post__author-name fn" href="/{{commenterUid}}">{{commenterName}}</a>
+							<br>
+							<div style="padding: 20px;border: 2px">{{text}}</div>
 							<div class="form-group with-icon-right ">
-								<div name="uploadsComment" class="form-control"></div>
 								<div class="add-options-message">
 									<a href="#" class="options-message" data-toggle="modal" data-target="#update-header-photo">
 										<svg class="olymp-camera-icon">
@@ -112,15 +114,19 @@
 
 					<!-- Comment Form  -->
 					
-					<form class="comment-form inline-items">
+					<form action="/comment" method="POST" class="comment-form inline-items">
 						<div>
 						<div class="post__author author vcard">
-							<img src="img/author-page.jpg" alt="author">
-							<a class="h6 post__author-name fn" href="">{{firstName}}</a>
+							<img style="width:28px;height:28px" src="uploads/profile_pic/{{../sesspic}}" class="avatar" alt="author">
+							<a class="h6 post__author-name fn" href="/{{../id}}">{{../firstName}}</a>
 							</div>
 							<div class="form-group with-icon-right ">
-								<textarea name="uploads-comment" class="form-control" placeholder=""></textarea>
+								<textarea name="commentText" class="form-control" placeholder=""></textarea>
 							</div>
+							<input style="display:none" type="text" name="commenterName" value="{{../firstName}}" />
+							<input style="display:none" type="text" name="commenterUid" value="{{../id}}" />
+							<input style="display:none" type="text" name="commenterPic" value="{{../sesspic}}" />
+							<input style="display:none" type="text" name="postId" value="{{_id}}" />
 						</div>
 					
 						<button class="btn btn-sm-1 btn-border-think c-grey btn-transparent custom-color">Cancel</button>

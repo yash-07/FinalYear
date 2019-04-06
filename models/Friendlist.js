@@ -3,14 +3,14 @@ const Schema = mongoose.Schema;
 //const User = require('User');
 
 var FriendListSchema =new Schema({
-	friends: [{
-        friendName: {
-            type: Schema.ObjectId,
-            required: true,
-            ref: 'User'
-        },
-        duration: {
-            type: Number
+    _id : {
+		type : String,
+		required : true
+	},
+    friends: [{
+        _id : {
+            type : String,
+            required : true
         }
     }]
 });

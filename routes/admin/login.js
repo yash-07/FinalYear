@@ -21,7 +21,6 @@ router.get('/', (req,res) => {
 		res.redirect('/');
 	}
 	else{
-
 		res.render('admin/login',{title : 'Login'});
 	}
 });

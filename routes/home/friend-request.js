@@ -1,19 +1,13 @@
 const express = require('express');
 const router = express.Router();
 const Friend = require('../../models/Friendship');
-// router.all('/*',(req,res,next)=>{
-
-// req.app.locals.layout = 'home';
-// next();
-
-// });
 
 router.post('/', (req,res) => {
 
 	var srcid = req.body.srcid;
 	var destid = req.body.destid;
-	var keyValSrc = {_id : destid , status : 2};
-	var keyValDest = {_id : srcid , status : 3};
+	var keyValSrc = {"_id" : destid , "status" : 2};
+	var keyValDest = {"_id" : srcid , "status" : 3};
 	Friend.findOne({_id : srcid} , function(err,frndArray) {
 		if(!frndArray) {
 			console.log("empty");
@@ -21,7 +15,13 @@ router.post('/', (req,res) => {
 			newFrnd.save();
 		}
 		else {
-			console.log(frndArray);
+			console.log("Kuch toh hua hai");
+			Friend.findOne({_id: srcid}).exec(function(err,requestt) {
+				requestt.relations.push(keyValSrc);
+				requestt.save(function(error) {
+					console.log("error");
+				});
+			});
 		}
 	});
 	Friend.findOne({_id : destid} , function(err,frndArray) {
@@ -31,7 +31,13 @@ router.post('/', (req,res) => {
 			newFrnd.save();
 		}
 		else {
-			console.log(frndArray);
+			console.log("Kuch toh hua hai");
+			Friend.findOne({_id: destid}).exec(function(err,requestt) {
+				requestt.relations.push(keyValDest);
+				requestt.save(function(error) {
+					console.log("error");
+				});
+			});
 		}
 	});
 	return res.status(200).json({status: 'success'});

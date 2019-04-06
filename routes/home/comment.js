@@ -1,18 +1,22 @@
-const newComment = new PostComment({
-					commentText : req.body.commentText,
-					postedBy : userid,
-					postedTo : userid,
-					datePosted : Date.now(),
-					
-			});
+const express = require('express');
+const router = express.Router();
+const Posts = require('../../models/File-upload');
 
-			newComment.save((err,fl) => {
-						
-				PostComment.find({}).then(postImage =>{
-						res.render('home/index',{postImage: postImage});
+router.post('/', (req,res) => {
+	var commentText = req.body.commentText;
+	var commenterName = req.body.commenterName;
+	var commenterUid = req.body.commenterUid;
+	var commenterPic = req.body.commenterPic;
+	var postId = req.body.postId;
 
-							var currentid = newFile._id;
-							console.log(userid);
-							console.log(currentid);
-						});
-				});
+	Posts.findOne({_id:postId}).exec(function(err,reqq) {
+		reqq.comments.push({commenterName: commenterName , commenterUid: commenterUid , commenterPic: commenterPic,text: commentText});
+		reqq.save(function(error) {
+			console.log("error");
+			res.redirect('/');
+		});
+	});
+
+});
+
+module.exports = router;

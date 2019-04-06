@@ -50,8 +50,8 @@
 
 						<div class="control-block-button">
 
-							{{#if false}}
-							<span class="notification-icon">
+							
+							<span class="notification-icon" id="accept-or-reject-span" style="display:none">
 							
 								<a href="#" class="accept-request" id="accept-request-btn">
 									<span class="icon-add">
@@ -67,24 +67,19 @@
 									Reject
 								</a>
 							</span>
-							{{/if}}
-						
-
-							{{#if true}}
-							<span class="notification-icon">
 							
-								<a class="accept-request" id="send-request-btn">
+							<span class="notification-icon" id="send-request-span" style="display:none">
+							
+								<a href="#" class="accept-request" id="send-request-btn">
 									<span class="icon-add">
 										<svg class="olymp-happy-face-icon"><use xlink:href="svg-icons/sprites/	icons.svg#olymp-happy-face-icon"></use></svg>
 									</span>
 									Send Request
 								</a>
 							</span>
-							{{/if}}
 
 
-							{{#if false}}
-							<span class="notification-icon">
+							<span class="notification-icon" id="request-sent-cancel-span" style="display:none">
 							
 								<a href="#" class="accept-request" id="request-sent-btn">
 									<span class="icon-add">
@@ -100,10 +95,8 @@
 									Cancel
 								</a>
 							</span>
-							{{/if}}
 
-							{{#if if_ideq}}
-							<div class="btn btn-control bg-primary more">
+							<div class="btn btn-control bg-primary more" id="edit-photos-div" style="display:none">
 							
 								<svg class="olymp-settings-icon"><use xlink:href="svg-icons/sprites/icons.svg#olymp-settings-icon"></use></svg>
 
@@ -117,15 +110,16 @@
 								</ul>
 								
 							</div>
-							{{/if}}
 
 						</div>
 						
 					</div>
 
 					<div class="top-header-author">
-						<a href="02-ProfilePage.html" class="author-thumb">
-							<img src="uploads/profile_pic/{{pic}}" alt="author" style="position:fixed">
+						<a href="uploads/profile_pic/{{pic}}" class="author-thumb">
+							
+								<img src="uploads/profile_pic/{{pic}}" alt="author" style="width:124px;height:124px">
+							
 						</a>
 						<div class="author-content">
 							<a href="" class="h4 author-name">{{userfirstName}}</a>
@@ -150,23 +144,26 @@
 
 				<div class="ui-block">
 
-					{{#each postImage}}
+					{{#each postsArray}}
 
 				<div class="ui-block form-group ">
+					<br>
 					<div >
-					<img src="img/author-page.jpg" alt="author" class="post__author author vcard inline-items">
-					<a class="h6 post__author-name fn" href="">{{userfirstName}}</a>
+						<div class="author-thumb">
+							<img style="width:28px;height:28px" src="uploads/profile_pic/{{../pic}}" alt="author">
+						</div>
+					<a class="h6 post__author-name fn" href="/{{../userid}}">{{../userfirstName}}</a>
 
 					<div name="caption"> {{caption}} </div>
-					<div name ="uploads"> <img src="/uploads/newfeeds_pic/{{file}}" alt=""></div>
+					<div name ="uploads"> <img src="uploads/newfeeds_pic/{{file}}" alt=""></div>
 					</div>
 
-						{{#each postComment}}
+						{{#each comments}}
 						<div class="post__author author vcard inline-items">
-							<img src="img/author-page.jp" alt="author" class="avatar">
-							<a class="h6 post__author-name fn" href="">{{userfirstName}}</a>
+							<img src="uploads/profile_pic/{{commenterPic}}" alt="author" class="avatar">
+							<a class="h6 post__author-name fn" href="/{{commenterUid}}">{{commenterName}}</a><br>
+							<div style="padding: 20px;border: 2px">{{text}}</div>
 							<div class="form-group with-icon-right ">
-								<div name="uploadsComment" class="form-control"></div>
 								<div class="add-options-message">
 									<a href="#" class="options-message" data-toggle="modal" data-target="#update-header-photo">
 										<svg class="olymp-camera-icon">
@@ -181,22 +178,26 @@
 
 					<!-- Comment Form  -->
 					
-					<form class="comment-form inline-items">
+					<form action="/comment" method="POST" class="comment-form inline-items">
 						<div>
 						<div class="post__author author vcard">
-							<img src="img/author-page.jpg" alt="author">
-							<a class="h6 post__author-name fn" href="">{{userfirstName}}</a>
+							<img style="width:28px;height:28px" src="uploads/profile_pic/{{../sesspic}}" class="avatar" alt="author">
+							<a class="h6 post__author-name fn" href="/{{../id}}">{{../firstName}}</a>
 							</div>
 							<div class="form-group with-icon-right ">
-								<textarea name="uploads-comment" class="form-control" placeholder=""></textarea>
+								<textarea name="commentText" class="form-control" placeholder=""></textarea>
 							</div>
+							<input style="display:none" type="text" name="commenterName" value="{{../firstName}}" />
+							<input style="display:none" type="text" name="commenterUid" value="{{../id}}" />
+							<input style="display:none" type="text" name="commenterPic" value="{{../sesspic}}" />
+							<input style="display:none" type="text" name="postId" value="{{_id}}" />
 						</div>
 					
 						<button class="btn btn-sm-1 btn-border-think c-grey btn-transparent custom-color">Cancel</button>
-						<button class="btn btn-sm-3 btn-primary">Post Comment</button>	
+						<button class="btn btn-sm-3 btn-primary">Post Comment</button>
 					</form>
 					
-					<!-- ... end Comment Form  -->
+					<!-- ... end Comment Form {}  -->
 
 				</div>
 
@@ -426,19 +427,104 @@
 
 
 <script>
-$('#send-request-btn').on('click',function(){
-	
-	var keyVal = { srcid: '{{sessid}}' , destid : '{{userid}}' };
-	console.log('Hello There',keyVal);
 
-	$.ajax({
-		url : '/friend-request',
-		type : 'POST',
-		data : keyVal,
-		dataType : 'json',
-		success : (data) => {
-			console.log(data);
-		}
+	function comment(val) {
+		console.log(val);
+	}
+
+	$(window).on('load',function() {
+		console.log("Hello There");
+		$.ajax({
+			url: '/check-req-status',
+			type: 'POST',
+			data: { srcid: '{{id}}' , destid : '{{userid}}' },
+			dataType: 'json',
+			success: (data) => {
+				if(data.status == 1) {
+					console.log("Friends Hai..");
+				}
+				else if(data.status == -1) {
+					$('#edit-photos-div').show();
+				}
+				else if(data.status == 0) {
+					$('#send-request-span').show();
+				}
+				else if(data.status == 2) {
+					$('#request-sent-cancel-span').show();
+				}
+				else if(data.status == 3) {
+					$('#accept-or-reject-span').show();
+				}
+			}
+		});
 	});
-});
+
+
+	$('#cancel-request-btn').on('click',function() {
+		var keyVal = { srcid: '{{id}}' , destid : '{{userid}}' };
+		console.log('Hello There',keyVal);
+
+		$.ajax({
+			url : '/remove-friend-request',
+			type : 'POST',
+			data : keyVal,
+			dataType : 'json',
+			success : (data) => {
+				console.log(data);
+				$('#request-sent-cancel-span').hide();
+				$('#send-request-span').show();
+			}
+		});
+	});
+	$('#reject-request-btn').on('click',function() {
+		var keyVal = { srcid: '{{id}}' , destid : '{{userid}}' };
+		console.log('Hello There',keyVal);
+
+		$.ajax({
+			url : '/remove-friend-request',
+			type : 'POST',
+			data : keyVal,
+			dataType : 'json',
+			success : (data) => {
+				console.log(data);
+				$('#accept-or-reject-span').hide();
+				$('#send-request-span').show();
+			}
+		});
+	});
+
+
+	$('#accept-request-btn').on('click',function() {
+		var keyVal = { srcid: '{{id}}' , destid : '{{userid}}' };
+		console.log('Hello There',keyVal);
+
+		$.ajax({
+			url : '/accept-friend-request',
+			type : 'POST',
+			data : keyVal,
+			dataType : 'json',
+			success : (data) => {
+				console.log(data);
+				$('#accept-or-reject-span').hide();
+			}
+		});
+	});
+
+	$('#send-request-btn').on('click',function(){
+		
+		var keyVal = { srcid: '{{id}}' , destid : '{{userid}}' };
+		console.log('Hello There',keyVal);
+
+		$.ajax({
+			url : '/friend-request',
+			type : 'POST',
+			data : keyVal,
+			dataType : 'json',
+			success : (data) => {
+				console.log(data);
+				$('#request-sent-cancel-span').show();
+				$('#send-request-btn').hide();
+			}
+		});
+	});
 </script>

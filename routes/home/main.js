@@ -12,19 +12,18 @@ const {isEmpty} = require('../../helpers/upload-helper');
 	router.get('/',(req,res)=>{
 
 		 if(req.session.user){
-
 		 	 var users = req.session.user;
 			 console.log("User Id: ",users);
 			 var userid = users._id ;
-		
-			PostFile.find({postedBy:userid}).then(postImage=>{
-				//console.log(postImage,"--",userid);
+			
+			PostFile.find({postedBy:userid}).then(postArray=>{
 				res.render('home/index',{
-						postImage: postImage,
-	                    title: users.userName,
-	                    id: users._id,
-	                    firstName : users.firstName,
-	                });
+					posts:postArray,
+					sesspic: users.profilePic,
+					title: users.userName,
+					id: users._id,
+					firstName : users.firstName
+				});
 			});
 		}
 
@@ -65,7 +64,8 @@ const {isEmpty} = require('../../helpers/upload-helper');
 			const newFile = new PostFile({
 					postedBy : userid,
 					caption : req.body.caption,
-					file: filename
+					file: filename,
+					comments:[]
 			});
 
 			newFile.save((err,fl) => {

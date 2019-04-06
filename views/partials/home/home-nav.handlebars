@@ -2,9 +2,9 @@
 
 <div class="fixed-sidebar">
 
-		<a href="02-ProfilePage.html" class="logo">
+		<a href="/" class="logo">
 			<div class="img-wrap">
-				<img src="" alt="SM">
+				<img src="img/logo.png" alt="SM">
 			</div>
 		</a>
 </div>
@@ -463,21 +463,18 @@
 <header class="header" id="site-header">
 
 <div class="page-title">
-		<h6>Newsfeed</h6>
+		<a href="/{{id}}"><h6 style="color:white">Newsfeed</h6></a>
 	</div>	
 
 	<div class="header-content-wrapper">
-		<form class="search-bar w-search notification-list friend-requests">
+		<form autocomplete="off" class="search-bar w-search notification-list friend-requests">
 			<div class="form-group with-button">
-				<input class="form-control js-user-search" placeholder="Search here people or pages..." type="text">
-				<button>
-					<svg class="olymp-magnifying-glass-icon"><use xlink:href="svg-icons/sprites/icons.svg#olymp-magnifying-glass-icon"></use></svg>
-				</button>
+				<input class="form-control js-user-search" id="search-box" placeholder="Search here peoples..." type="text">
+				<ul style="background-color:burlywood;position: absolute;width: 100%;max-width:870px;cursor: pointer;overflow-y: auto;max-height: 400px;box-sizing: border-box;z-index: 1001;" class="list-group" id="result">
+				</ul>
 			</div>
 		</form>
-
-		<a href="#" class="link-find-friend">Find Friends</a>
-
+		
 		<div class="control-block">
 
 			<div class="control-icon more has-items">
@@ -605,7 +602,7 @@
 
 			<div class="author-page author vcard inline-items more">
 				<div class="author-thumb">
-					<img alt="author" src="img/author-page.jpg" class="avatar">
+					<img style="width:36px;height:36px" alt="author" src="uploads/profile_pic/{{sesspic}}" class="avatar">
 					<span class="icon-status online"></span>
 					<div class="more-dropdown more-with-triangle">
 						<div class="mCustomScrollbar" data-mcs-theme="dark">

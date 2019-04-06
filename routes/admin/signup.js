@@ -46,6 +46,18 @@ router.post('/',(req,res)=>{
 	let filename = '';
 	let file = req.files.file;
 
+	//Moving File To Folder
+	var currentid = newUser._id;
+	//console.log(currentid);
+	filename = currentid + '-' + file.name;
+	let dirUploads = './public/uploads/profile_pic/'; 
+
+	file.mv(dirUploads + filename,(err) =>{
+		if(err){ 
+					throw err;
+				}
+	});
+
 	//Fetching Data from Form
 	const newUser = new User({
 
@@ -55,23 +67,12 @@ router.post('/',(req,res)=>{
 		password: req.body.password ,
 		dateTimepicker: req.body.dateTimepicker ,
 		gender: req.body.gender ,
-		//file: filename,
+		profilePic: filename,
 		optionsCheckboxes: optionsCheckboxes,	
 		//date : generateTime date 'DD MMMM YYYY X'
 	});
 
-		//Moving File To Folder
-		var currentid = newUser._id;
-		//console.log(currentid);
-	
-		filename = currentid + '-' + file.name;
-		let dirUploads = './public/uploads/profile_pic/'; 
-
-		file.mv(dirUploads + filename,(err) =>{
-			if(err){ 
-						throw err;
-					}
-		});
+		
 
 	//Saving Data
 	newUser.save((err,post) => {

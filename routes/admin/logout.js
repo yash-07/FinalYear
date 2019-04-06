@@ -11,7 +11,6 @@ router.get('/', (req,res) => {
 	var sess= req.session;
 	sess.destroy();
 	res.redirect('/login');
-	
 });
 
 module.exports = router;

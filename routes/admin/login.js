@@ -35,20 +35,35 @@ router.post('/',(req,res)=>{
 	var password = req.body.password;
 	var sess = req.session;
 	User.findOne({userName: userName, password: password},(err,user)=>{
-		if(err){ return console.log(err);}
-		if(!user){ return console.log(userName); }
+		if(err){
+			if(req.query.type == 'api') {
+				return res.status(200).json({message: 'Login Error!'});
+			}
+			else {
+				return console.log(err);
+			} 
+		}
+		if(!user){
+			if(req.query.type == 'api') {
+				return res.status(404).json({message: 'Invalid Credentials!'});
+			}
+			else {
+				return console.log(userName); 
+			}
+		}
 
 		if (user.compare(req.body.password)){
-			//var sess = req.session;
-			//sess.id = user._id;
-			//sess.fullName = user.fullname;
-			// sess.username = user.username;
-			// sess.email = user.email;
-			req.session.user = user;
-			req.session.save();
-			var id = user._id;
-			//console.log(req.session.user);
-			res.redirect('/');
+			if(req.query.type == 'api') {
+				var nn = JSON.parse(JSON.stringify(user));
+				console.log(nn);
+				return res.status(200).json({message: 'Login Successful!', user: nn});
+			}
+			else {
+				req.session.user = user;
+				req.session.save();
+				var id = user._id;
+				res.redirect('/');
+			}
 		}
 	});
 });

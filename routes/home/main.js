@@ -39,8 +39,8 @@ const {isEmpty} = require('../../helpers/upload-helper');
 
 	router.post('/',(req,res)=>{
 		
-		 var users = req.session.user;
-		 console.log("User Id: ",users);
+		var users = req.session.user;
+		console.log("User Id: ",users);
 		var userid = users._id ;//
 		let filename = '';
 
@@ -70,14 +70,12 @@ const {isEmpty} = require('../../helpers/upload-helper');
 
 			newFile.save((err,fl) => {
 				console.log(fl);
-				res.redirect('/');
-				// PostFile.find({}).then(postImage =>{
-				// 		res.render('home/index',{postImage: postImage});
-
-				// 			fileid = newFile._id;
-				// 			//console.log(userid);
-				// 			//console.log(fileid);
-				// 		});
+				if(req.query.type == 'api'){
+					res.status(200).json({message: 'Post Uploaded!!'});
+				}
+				else{
+					res.redirect('/');
+				}
 			});
 
 			

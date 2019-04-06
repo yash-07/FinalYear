@@ -11,7 +11,6 @@ router.get('/', (req,res) => {
 
 	var sess =req.session;
 	if(sess.user){
-		
 		res.redirect('/');
 	}
 	else{
@@ -42,7 +41,6 @@ router.post('/',(req,res)=>{
 		else{
 			optionsCheckboxes = false;
 		}
-
 	let filename = '';
 	let file = req.files.file;
 
@@ -77,14 +75,21 @@ router.post('/',(req,res)=>{
 	//Saving Data
 	newUser.save((err,post) => {
 		if(!err) {
-			console.log('doc:'+post);
-			
-			req.flash('success_message',`Welcome to Soci0_Medi@ ${post.userName} !!`);
-			res.redirect('/signup');
+			if(req.query.type == 'api'){
+				res.status(200).json({message: 'Signup Successful!'});
+			}
+			else{
+				console.log('doc:'+post);
+				req.flash('success_message',`Welcome to Soci0_Medi@ ${post.userName} !!`);
+				res.redirect('/signup');
+			}
 		}
 		else {
 			console.log('Error while saving data');
 			console.log(err);
+			if(req.query.type == 'api'){
+				res.status(200).json({message: 'Error in Signup'});
+			}
 		}
 	});
 

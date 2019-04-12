@@ -44,7 +44,7 @@ router.get('/:id', (req,res) => {
 					//var sessid = "5ca5c231ad24c31ac98ea5fd";
 					var if_profilepage = if_ideq(sessid,userid);
 
-					PostFile.find({postedBy:userid}).then(posts=>{
+					PostFile.find({postedBy:userid}).sort({_id: -1}).then(posts=>{
 						res.render('home/profilepage',{
 								postsArray: posts,
 								title: user.userName,

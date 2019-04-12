@@ -64,6 +64,7 @@ const acceptfrndreq = require('./routes/home/accept-friend-request');
 const removefrndreq = require('./routes/home/remove-friend-request');
 const comment = require('./routes/home/comment')
 const search = require('./routes/home/search');
+const loadFriendPosts = require('./routes/home/load-friend-posts');
 //const admin_page = require('./routes/admin/posts-index');
 //Use Routes 
 app.use('/',home);
@@ -77,6 +78,7 @@ app.use('/check-req-status',checkreqstatus);
 app.use('/remove-friend-request',removefrndreq);
 app.use('/comment',comment);
 app.use('/search',search);
+app.use('/load-friend-posts',loadFriendPosts);
 //app.use('/',admin_page);
  
 app.listen(4500,()=>{

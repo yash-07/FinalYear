@@ -35,6 +35,7 @@ router.post('/',(req,res)=>{
 	var password = req.body.password;
 	var sess = req.session;
 	User.findOne({userName: userName, password: password},(err,user)=>{
+		
 		if(err){
 			if(req.query.type == 'api') {
 				return res.status(200).json({message: 'Login Error!'});

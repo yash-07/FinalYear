@@ -1,16 +1,43 @@
-<h3>{{{viewTitle}}}</h3>
-<div class="col-md-6 offset-md-3" style="background-color: #fff;margin-top: 25px;padding:20px;">
-<form method="POST" action="/login" autocomplete="off">
-    <div class="form-group">
-        <label>Username</label>
-        <input type="text" class="form-control" name="userName" placeholder="Username">
+<head>
+    <!-- Font Icon -->
+    <link rel="stylesheet" href="fonts/material-icon/css/material-design-iconic-font.min.css">
+
+    <!-- Main css -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+        <!-- login.handlebars -->
+        <section class="sign-in">
+            <div class="container">
+                <div class="signin-content">
+                    <div class="signin-image">
+                        <figure><img src="images/signin-image.jpg" alt="sing up image"></figure>
+                        <a href="/signup" class="signup-image-link">Create an account</a>
+                    </div>
+
+                    <div class="signin-form">
+                        <h1 class="form-title">Welcome to Soci0 Medi@!</h1>
+                        <form method="POST" class="register-form" action="/login" id="login-form" autocomplete="off">
+                            <div class="form-group">
+                                <label for="your_name"><i class="zmdi zmdi-account material-icons-name"></i></label>
+                                <input type="text" name="userName" id="your_name" placeholder="username"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="your_pass"><i class="zmdi zmdi-lock"></i></label>
+                                <input type="password" name="password" id="your_pass" placeholder="password"/>
+                            </div>
+                            <div class="form-group form-button">
+                                <input type="submit" name="signin" id="signin" class="form-submit" value="Log in"/>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
     </div>
-    <div class="form-group">
-        <label>Password</label>
-        <input type="password" class="form-control" name="password" placeholder="Password">
-    </div>
-    <div class="form-group">
-        <button type="submit" class="btn btn-info"><i class="fa fa-database"></i> Submit</button>
-    </div>
-</form>
-</div>
+<body>
+    <!-- JS -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="js/main.js"></script>
+</body><!-- This templates was made by Colorlib (https://colorlib.com) -->

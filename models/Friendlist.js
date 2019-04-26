@@ -8,10 +8,9 @@ var FriendListSchema =new Schema({
 		required : true
 	},
     friends: [{
-        _id : {
-            type : String,
-            required : true
-        }
+        type : mongoose.Schema.Types.ObjectId,
+        ref: 'users',
+        required : true
     }]
 });
 

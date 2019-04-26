@@ -18,7 +18,7 @@ router.post('/', (req,res) => {
                 var rell = JSON.parse(JSON.stringify(element));
                 var friends = rell['friends'];
                 for(var i in friends) {
-                    if(friends[i]._id == destid) {
+                    if(friends[i] == destid) {
                         console.log("Friends Hi toh hai!!");
                         found = true;
                         return res.status(200).json({status: 1});

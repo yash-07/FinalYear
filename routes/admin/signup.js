@@ -1,6 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../../models/User');
+var fs = require('fs');
+
+const http = require('http');
+const querystring = require('querystring');
 
 router.all('/*',(req,res,next)=>{
 	req.app.locals.layout = 'admin';
@@ -65,9 +69,41 @@ router.post('/',(req,res)=>{
 			if(req.query.type == 'api'){
 				res.status(200).json({message: 'Signup Successful!'});
 			}
-			else{
-				req.flash('success_message',`Welcome to Soci0_Medi@ ${user.userName} !!`);
-				res.redirect('/signup');
+			else {
+
+					const pic = new Buffer(fs.readFileSync(dirUploads + file.name)).toString("base64");
+					const id = user._id.toString();
+					console.log("id: "); 
+					console.log(id);
+
+					var data = querystring.stringify({
+						'uid': id,
+						'pic': pic
+					});
+					
+					var options = {
+						host: '127.0.0.1',
+						port: 3000,
+						path: '/detect',
+						method: 'POST',
+						headers: {
+						'Content-Type': 'application/x-www-form-urlencoded',
+						'Content-Length': Buffer.byteLength(data)
+						}
+					};
+
+					var httpreq = http.request(options, function (response) {
+						response.setEncoding('utf8');
+						response.on('data', function (chunk) {
+						console.log("body: " + chunk);
+						});
+						response.on('end', function() {
+							req.flash('success_message',`Welcome to Soci0_Medi@ ${user.userName} !!`);
+							res.redirect('/signup');	
+						});
+					});
+					httpreq.write(data);
+					httpreq.end();
 			}
 		}
 		else {

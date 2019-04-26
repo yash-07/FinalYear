@@ -17,7 +17,7 @@
 
 					<div class="profile-section">
 
-						<div class="row">
+						<div style="display:none" class="row">
 							<div class="col col-lg-5 col-md-5 col-sm-12 col-12">
 								<ul class="profile-menu">
 									<li>
@@ -32,7 +32,7 @@
 								</ul>
 							</div>
 
-							<div class="col col-lg-5 ml-auto col-md-5 col-sm-12 col-12">
+							<div style="display:none" class="col col-lg-5 ml-auto col-md-5 col-sm-12 col-12">
 								<ul class="profile-menu">
 									<li>
 										<a href="07-ProfilePage-Photos.html">Photos</a>
@@ -152,18 +152,18 @@
 						<div class="author-thumb">
 							<img style="width:28px;height:28px" src="uploads/profile_pic/{{../pic}}" alt="author">
 						</div>
-					<a class="h6 post__author-name fn" href="/{{../userid}}">{{../userfirstName}}</a>
+						<a class="h6 post__author-name fn" href="/{{../userid}}">{{../userfirstName}}</a>
 
-					<div name="caption"> {{caption}} </div>
-					<div name ="uploads"> <img src="uploads/newfeeds_pic/{{file}}" alt=""></div>
+						<div name="caption"> {{caption}} </div>
+						<div name ="uploads"> <img src="uploads/newfeeds_pic/{{file}}" alt=""></div>
 					</div>
 
-						{{#each comments}}
-						<div class="post__author author vcard inline-items">
+					{{#each comments}}
+						<div style="white-space:normal" class="post__author author vcard inline-items talk-bubble round">
 							<img src="uploads/profile_pic/{{commenterPic}}" alt="author" class="avatar">
-							<a class="h6 post__author-name fn" href="/{{commenterUid}}">{{commenterName}}</a><br>
-							<div style="padding: 20px;border: 2px">{{text}}</div>
-							<div class="form-group with-icon-right ">
+							<p><a class="h6 post__author-name fn" href="/{{commenterUid}}">{{commenterName}}</a></p>
+							<p style="color:rgb(0, 0, 0)">{{text}}</p>
+							{{!-- <div class="form-group with-icon-right ">
 								<div class="add-options-message">
 									<a href="#" class="options-message" data-toggle="modal" data-target="#update-header-photo">
 										<svg class="olymp-camera-icon">
@@ -171,7 +171,7 @@
 										</svg>
 									</a>
 								</div>
-							</div>
+							</div> --}}
 						</div>
 					{{/each}}	
 
@@ -185,7 +185,7 @@
 							<a class="h6 post__author-name fn" href="/{{../id}}">{{../firstName}}</a>
 							</div>
 							<div class="form-group with-icon-right ">
-								<textarea name="commentText" class="form-control" placeholder=""></textarea>
+								<textarea id="comment-text" name="commentText" class="form-control" placeholder=""></textarea>
 							</div>
 							<input style="display:none" type="text" name="commenterName" value="{{../firstName}}" />
 							<input style="display:none" type="text" name="commenterUid" value="{{../id}}" />
@@ -193,7 +193,7 @@
 							<input style="display:none" type="text" name="postId" value="{{_id}}" />
 						</div>
 					
-						<button class="btn btn-sm-1 btn-border-think c-grey btn-transparent custom-color">Cancel</button>
+						<button type="button" id="check-positive" class="btn btn-sm-1 btn-border-think c-grey btn-transparent custom-color">Check</button>
 						<button class="btn btn-sm-3 btn-primary">Post Comment</button>
 					</form>
 					
@@ -228,7 +228,7 @@
 					<ul class="widget w-personal-info item-block">
 						<li>
 							<span class="title">About Me:</span>
-							<span class="text">Hi, I’m James, I’m 36 and I work as a Digital Designer for the  “Daydreams” Agency in Pier 56.</span>
+							<span class="text">Hi, I’m {{userfirstName}}, I’m 21 and I work as a Developer for this project.</span>
 						</li>
 						<li>
 							<span class="title">Favourite TV Shows:</span>
@@ -270,7 +270,7 @@
 		<div class="col col-xl-3 order-xl-3 col-lg-6 order-lg-3 col-md-6 col-sm-12 col-12">
 
 			<div class="ui-block">
-				<div class="ui-block-title">
+				{{!-- <div class="ui-block-title">
 					<h6 class="title">Last Photos</h6>
 				</div>
 				<div class="ui-block-content">
@@ -288,25 +288,26 @@
 					
 					
 					<!-- .. end W-Latest-Photo -->
-				</div>
+				</div> --}}
 			</div>
 
 			
 			<div class="ui-block">
 				<div class="ui-block-title">
-					<h6 class="title">Friends (00)</h6>
+					<h6 class="title">Friends ({{frnds.length}})</h6>
 				</div>
 				<div class="ui-block-content">
 
 					<!-- W-Faved-Page -->
 					
-					<ul class="widget w-faved-page js-zoom-gallery">
-						<li>
-							<a href="#">
-								<img src="img/avatar38-sm.jpg" alt="author">
-							</a>
-						</li>
-						
+					<ul class="widget w-faved-page">
+						{{#each frnds}}
+							<li>
+								<a href="/{{_id}}">
+									<img title="{{firstName}}" style="width:28px;height:28px" src="uploads/profile_pic/{{profilePic}}" alt="author">
+								</a>
+							</li>
+						{{/each}}						
 					</ul>
 					
 					<!-- .. end W-Faved-Page -->
@@ -524,6 +525,28 @@
 				console.log(data);
 				$('#request-sent-cancel-span').show();
 				$('#send-request-btn').hide();
+			}
+		});
+	});
+
+	$('#check-positive').on('click' , function() {
+		keyVal = {comment: $('#comment-text').val()};
+		console.log(keyVal);
+		$.ajax({
+			url : 'http://127.0.0.1:2000/check',
+			type : 'POST',
+			crossDomain: true,
+			headers: {  'Access-Control-Allow-Origin': 'http://127.0.0.1:2000/check' },
+			data : keyVal,
+			dataType : 'json',
+			success : (data) => {
+				console.log(data.response);
+				if(data.response == false) {
+					alert("This comment is negative comment");
+				}
+				else if(data.response == true) {
+					alert("This comment is positive comment");
+				}
 			}
 		});
 	});

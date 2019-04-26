@@ -1,5 +1,7 @@
 <!-- Fixed Sidebar Left -->
 
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
 <div class="fixed-sidebar">
 
 		<a href="/" class="logo">
@@ -9,37 +11,20 @@
 		</a>
 </div>
 
-<!-- ... end Fixed Sidebar Left -->
-
-<!-- Fixed Sidebar Left -->
-<!-- ... end Fixed Sidebar Left -->
-
-<!-- Fixed Sidebar Right -->
-
 <div class="fixed-sidebar right">
 	<div class="fixed-sidebar-right sidebar--small" id="sidebar-right">
 
 		<div class="mCustomScrollbar" data-mcs-theme="dark">
 			<ul class="chat-users">
-				<li class="inline-items js-chat-open">
-					<div class="author-thumb">
-						<img alt="author" src="img/avatar63-sm.jpg" class="avatar">
-						<span class="icon-status status-invisible"></span>
-					</div>
-				</li>
-				<li class="inline-items js-chat-open">
-					<div class="author-thumb">
-						<img alt="author" src="img/avatar72-sm.jpg" class="avatar">
-						<span class="icon-status away"></span>
-					</div>
-				</li>
-				<li class="inline-items js-chat-open">
-
-					<div class="author-thumb">
-						<img alt="author" src="img/avatar71-sm.jpg" class="avatar">
-						<span class="icon-status online"></span>
-					</div>
-				</li>
+				{{#each frnds}}
+					<li class="inline-items">
+						<a href="/{{_id}}">
+							<div class="author-thumb">
+								<img title="{{firstName}}" style="width:45px;height:45px" alt="author" src="uploads/profile_pic/{{profilePic}}" class="avatar">
+							</div>
+						</a>
+					</li>
+				{{/each}}
 			</ul>
 		</div>
 
@@ -474,54 +459,48 @@
 		<div class="control-block">
 
 			<div class="control-icon more has-items">
-				<svg class="olymp-happy-face-icon"><use xlink:href="svg-icons/sprites/icons.svg#olymp-happy-face-icon"></use></svg>
-				<div class="label-avatar bg-blue">6</div>
+				<svg width="25" height="25"
+				xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">       
+				<image xlink:href="svg-icons/frnd_req.svg" height="25" width="25"/>
+				</svg>
+
+				{{!-- <svg class="olymp-happy-face-icon"><use xlink:src="svg-icons/frnd_req"></use></svg> --}}
+				<div class="label-avatar bg-blue">{{friendReq.length}}</div>
 
 				<div class="more-dropdown more-with-triangle triangle-top-center">
-					<div class="ui-block-title ui-block-title-small">
-						<h6 class="title">FRIEND REQUESTS</h6>
-						<a href="#">Find Friends</a>
-						<a href="#">Settings</a>
-					</div>
 
 					<div class="mCustomScrollbar" data-mcs-theme="dark">
 						<ul class="notification-list friend-requests">
+							{{#each friendReq}}
 							<li>
 								<div class="author-thumb">
-									<img src="img/avatar55-sm.jpg" alt="author">
+									<img style="width:28px;height:28px" src="uploads/profile_pic/{{profilePic}}" title="{{firstName}}" alt="author">
 								</div>
 								<div class="notification-event">
-									<a href="#" class="h6 notification-friend">Tamara Romanoff</a>
-									<span class="chat-message-item">Mutual Friend: Sarah Hetfield</span>
+									<a href="#" class="h6 notification-friend">{{firstName}}</a>
+									<span class="chat-message-item">{{userName}}</span>
 								</div>
 								<span class="notification-icon">
-									<a href="#" class="accept-request">
+									<a id="accept-req-btn-row" title="{{../id}},{{_id}}" class="accept-request accept-req-btn-row">
 										<span class="icon-add without-text">
 											<svg class="olymp-happy-face-icon"><use xlink:href="svg-icons/sprites/icons.svg#olymp-happy-face-icon"></use></svg>
-										</span>
+										</span> 	
 									</a>
-
-									<a href="#" class="accept-request request-del">
+									<a id="remove-req-btn-row" title="{{../id}},{{_id}}" class="accept-request remove-req-btn-row">
 										<span class="icon-minus">
 											<svg class="olymp-happy-face-icon"><use xlink:href="svg-icons/sprites/icons.svg#olymp-happy-face-icon"></use></svg>
 										</span>
 									</a>
-
 								</span>
-
-								<div class="more">
-									<svg class="olymp-three-dots-icon"><use xlink:href="svg-icons/sprites/icons.svg#olymp-three-dots-icon"></use></svg>
-								</div>
 							</li>
+							{{/each}}
 
 						</ul>
 					</div>
-
-					<a href="#" class="view-all bg-blue">Check all your Events</a>
 				</div>
 			</div>
 
-			<div class="control-icon more has-items">
+			{{!-- <div class="control-icon more has-items">
 				<svg class="olymp-chat---messages-icon"><use xlink:href="svg-icons/sprites/icons.svg#olymp-chat---messages-icon"></use></svg>
 				<div class="label-avatar bg-purple">2</div>
 
@@ -555,9 +534,9 @@
 
 					<a href="#" class="view-all bg-purple">View All Messages</a>
 				</div>
-			</div>
+			</div> --}}
 
-			<div class="control-icon more has-items">
+			{{!-- <div class="control-icon more has-items">
 				<svg class="olymp-thunder-icon"><use xlink:href="svg-icons/sprites/icons.svg#olymp-thunder-icon"></use></svg>
 
 				<div class="label-avatar bg-primary">8</div>
@@ -594,7 +573,7 @@
 
 					<a href="#" class="view-all bg-primary">View All Notifications</a>
 				</div>
-			</div>
+			</div> --}}
 
 			<div class="author-page author vcard inline-items more">
 				<div class="author-thumb">
@@ -624,71 +603,15 @@
 									</a>
 								</li>
 							</ul>
-
-							<div class="ui-block-title ui-block-title-small">
-								<h6 class="title">Chat Settings</h6>
-							</div>
-
-							<ul class="chat-settings">
-								<li>
-									<a href="#">
-										<span class="icon-status online"></span>
-										<span>Online</span>
-									</a>
-								</li>
-								<li>
-									<a href="#">
-										<span class="icon-status away"></span>
-										<span>Away</span>
-									</a>
-								</li>
-								<li>
-									<a href="#">
-										<span class="icon-status disconected"></span>
-										<span>Disconnected</span>
-									</a>
-								</li>
-
-								<li>
-									<a href="#">
-										<span class="icon-status status-invisible"></span>
-										<span>Invisible</span>
-									</a>
-								</li>
-							</ul>
-
-							<div class="ui-block-title ui-block-title-small">
-								<h6 class="title">Custom Search</h6>
-							</div>
-
-							<form class="form-group with-button custom-status">
-								<input class="form-control" placeholder="" type="text" value="Take me to..">
-
-								<button class="bg-purple">
-									<svg class="olymp-check-icon"><use xlink:href="svg-icons/sprites/icons.svg#olymp-check-icon"></use></svg>
-								</button>
-							</form>
-
-							<div class="ui-block-title ui-block-title-small">
-								<h6 class="title">About Website</h6>
-							</div>
-
-							<ul>
-								<li>
-									<a href="#">
-										<span>Contact</span>
-									</a>
-								</li>
-							</ul>
 						</div>
 
 					</div>
 				</div>
-				<a href="02-ProfilePage.html" class="author-name fn">
+				<a href="/{{id}}" class="author-name fn">
 					<div class="author-title">
 						{{firstName}} <svg class="olymp-dropdown-arrow-icon"><use xlink:href="svg-icons/sprites/icons.svg#olymp-dropdown-arrow-icon"></use></svg>
 					</div>
-					<span class="author-subtitle">GG b0iy!</span>
+					<span style="font-size:14px" class="author-subtitle">{{title}}</span>
 				</a>
 			</div>
 
@@ -747,11 +670,6 @@
 		<div class="tab-pane " id="request" role="tabpanel">
 
 			<div class="mCustomScrollbar" data-mcs-theme="dark">
-				<div class="ui-block-title ui-block-title-small">
-					<h6 class="title">FRIEND REQUESTS</h6>
-					<a href="#">Find Friends</a>
-					<a href="#">Settings</a>
-				</div>
 				<ul class="notification-list friend-requests">
 					<li>
 						<div class="author-thumb">
@@ -1062,3 +980,44 @@
 
 <!-- ... end Responsive Header-BP -->
 <div class="header-spacer"></div>
+
+<script>
+
+	$('.accept-req-btn-row').on('click',function() {
+		console.log("abc");
+		var tt = $(this).attr("title");
+		var ids = tt.split(",");
+		var keyVal = { srcid: ids[0] , destid : ids[1] };
+		console.log(keyVal);
+		//document.location.href = "/";
+		$.ajax({
+			url : '/accept-friend-request',
+			type : 'POST',
+			data : keyVal,
+			dataType : 'json',
+			success : (data) => {
+				console.log(data);
+				document.location.href = "/";
+			}
+		});
+	});
+
+	$('.remove-req-btn-row').on('click',function() {
+		console.log("abc");
+		var tt = $(this).attr("title");
+		var ids = tt.split(",");
+		var keyVal = { srcid: ids[0] , destid : ids[1] };
+		console.log(keyVal);
+		//document.location.href = "/";
+		$.ajax({
+			url : '/remove-friend-request',
+			type : 'POST',
+			data : keyVal,
+			dataType : 'json',
+			success : (data) => {
+				console.log(data);
+				document.location.href = "/";
+			}
+		});
+	});
+</script>

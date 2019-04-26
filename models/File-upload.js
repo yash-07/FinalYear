@@ -13,6 +13,10 @@ const FileSchema = new Schema({
 	file:{
 		type : String
 	},
+	tags:[{
+		type : mongoose.Schema.Types.ObjectId,
+        ref: 'users'
+	}],
 	comments:[
 		{
 			cid:{
@@ -22,7 +26,7 @@ const FileSchema = new Schema({
 				type: String
 			},
 			commenterUid: {
-				type:String
+				type : String
 			},
 			commenterPic: {
 				type: String

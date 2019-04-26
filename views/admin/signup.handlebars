@@ -1,3 +1,5 @@
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
 <h3>{{{viewTitle}}}</h3>
 
 <div class="header--standard header--standard-landing" id="header--standard">
@@ -224,7 +226,7 @@
                         {{>admin/signup-msgs}}
                     
                         <div class="title h6">Register to Soci0 Medi@</div>
-                        <form action=" " method="post" class="content" enctype="multipart/form-data">
+                        <form action=" " method="post" class="content" id="signup-form" enctype="multipart/form-data">
                             <div class="row">
                                 <div class="col col-12 col-xl-6 col-lg-6 col-md-6 col-sm-12">
                                     <div class="form-group label-floating is-empty">
@@ -235,7 +237,7 @@
                                 <div class="col col-12 col-xl-6 col-lg-6 col-md-6 col-sm-12">
                                     <div class="form-group label-floating is-empty">
                                         <label class="control-label">User Name</label>
-                                        <input name="userName" class="form-control" placeholder="" type="text" required>
+                                        <input name="userName" id="username-sbmt" class="form-control" placeholder="" type="text" required>
                                     </div>
                                 </div>
                                 <div class="col col-12 col-xl-12 col-lg-12 col-md-12 col-sm-12">
@@ -267,7 +269,7 @@
                                     
                                     <div class="form-group">
                                         <label for="file">Upload Image</label>
-                                        <input type="file" name="file" class="form-control">
+                                        <input id="file-sbmt" type="file" name="file" class="form-control">
                                     </div>
 
                                     <div class="remember">

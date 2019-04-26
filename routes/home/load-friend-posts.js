@@ -17,8 +17,11 @@ router.post('/', (req,res) => {
             var frnds = obje['friends'];
             var arra = [];
             for(var i in frnds) {
-                arra.push(frnds[i]._id);
+                arra.push(frnds[i]);
             }
+
+
+
             PostFile.aggregate([
                 {$match:{postedBy: {$in : arra}}},
                 {$sort: {_id: -1}}

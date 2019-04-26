@@ -20,19 +20,19 @@ router.post('/', (req,res) => {
         });
     });
 
-    var keyValSrc = {"_id" : destid};
-    var keyValDest = {"_id" : srcid };
+    //var keyValSrc = {"_id" : destid};
+    //var keyValDest = {"_id" : srcid };
     
     Friends.findOne({_id:srcid},function(err,frndArray) {
         if(!frndArray) {
             console.log("empty");
-			var newFrnd = new Friends({_id: srcid , friends: [keyValSrc]});
+			var newFrnd = new Friends({_id: srcid , friends: [destid]});
 			newFrnd.save();
         }
         else {
             console.log("Kuch toh hua hai");
 			Friends.findOne({_id: srcid}).exec(function(err,requestt) {
-				requestt.friends.push(keyValSrc);
+				requestt.friends.push(destid);
 				requestt.save(function(error) {
 					console.log("error");
 				});
@@ -43,13 +43,13 @@ router.post('/', (req,res) => {
     Friends.findOne({_id:destid},function(err,frndArray) {
         if(!frndArray) {
             console.log("empty");
-			var newFrnd = new Friends({_id: destid , friends: [keyValDest]});
+			var newFrnd = new Friends({_id: destid , friends: [srcid]});
 			newFrnd.save();
         }
         else {
             console.log("Kuch toh hua hai");
 			Friends.findOne({_id: destid}).exec(function(err,requestt) {
-				requestt.friends.push(keyValDest);
+				requestt.friends.push(srcid);
 				requestt.save(function(error) {
 					console.log("error");
 				});

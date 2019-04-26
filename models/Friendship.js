@@ -8,7 +8,8 @@ var FriendshipSchema = new Schema({
 	},
 	relations: [{
 		_id: {
-			type : String,
+			type : mongoose.Schema.Types.ObjectId,
+        	ref: 'users',
 			required : true
 		},
 		status: {
@@ -17,6 +18,6 @@ var FriendshipSchema = new Schema({
 		}
 	}]
 
-	});
+});
 
 module.exports = mongoose.model('Friendship', FriendshipSchema);

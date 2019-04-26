@@ -11,6 +11,7 @@ router.post('/', (req,res) => {
 
 	Posts.findOne({_id:postId}).exec(function(err,reqq) {
 		reqq.comments.push({commenterName: commenterName , commenterUid: commenterUid , commenterPic: commenterPic,text: commentText});
+		//reqq.comments.push({commenterUid: commenterUid, text: commentText});
 		reqq.save(function(error) {
 			if(req.query.type == 'api'){
 				res.status(200).json({message: 'Comment Posted!'});

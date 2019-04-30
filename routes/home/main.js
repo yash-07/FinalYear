@@ -69,6 +69,7 @@ const {isEmpty} = require('../../helpers/upload-helper');
 																	posts:newArr,
 																	sesspic:users.profilePic,
 																	title:users.userName,
+																	sessUserName:users.userName,
 																	friendReq: friendReq,
 																	id: users._id,
 																	firstName: users.firstName,
@@ -97,6 +98,7 @@ const {isEmpty} = require('../../helpers/upload-helper');
 																					friendReq: friendReq,
 																					sesspic:users.profilePic,
 																					title:users.userName,
+																					sessUserName:users.userName,
 																					id: users._id,
 																					firstName: users.firstName,
 																					frnds: frndLists
@@ -120,6 +122,7 @@ const {isEmpty} = require('../../helpers/upload-helper');
 																				sesspic:users.profilePic,
 																				title:users.userName,
 																				id: users._id,
+																				sessUserName:users.userName,
 																				firstName: users.firstName,
 																				frnds: frndLists
 																			});
@@ -140,6 +143,7 @@ const {isEmpty} = require('../../helpers/upload-helper');
 												title:users.userName,
 												id: users._id,
 												friendReq: friendReq,
+												sessUserName:users.userName,
 												firstName: users.firstName,
 												frnds: frndLists
 											});
@@ -194,6 +198,7 @@ const {isEmpty} = require('../../helpers/upload-helper');
 																		title:users.userName,
 																		friendReq: friendReq,
 																		id: users._id,
+																		sessUserName:users.userName,
 																		firstName: users.firstName,
 																		frnds: frndLists
 																	});
@@ -213,6 +218,7 @@ const {isEmpty} = require('../../helpers/upload-helper');
 																				sesspic:users.profilePic,
 																				title:users.userName,
 																				id: users._id,
+																				sessUserName:users.userName,
 																				firstName: users.firstName,
 																				frnds: frndLists
 																			});
@@ -230,6 +236,7 @@ const {isEmpty} = require('../../helpers/upload-helper');
 												res.render('home/index',{
 													posts:[],
 													sesspic:users.profilePic,
+													sessUserName:users.userName,
 													title:users.userName,
 													id: users._id,
 													friendReq: friendReq,

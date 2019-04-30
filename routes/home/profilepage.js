@@ -76,6 +76,7 @@ router.get('/:id', (req,res) => {
 												sesspic: sessuser.profilePic,
 												frnds: frndLists,
 												firstName : sessuser.firstName,
+												sessUserName : sessuser.userName,
 												userfirstName : user.firstName
 											});
 										});
@@ -129,6 +130,7 @@ router.get('/:id', (req,res) => {
 											res.render('home/profilepage',{
 												postsArray: posts,
 												title: user.userName,
+												sessUserName : sessuser.userName,
 												id : sessid,
 												userid : userid,
 												pic: user.profilePic,
